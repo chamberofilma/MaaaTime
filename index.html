@@ -10,16 +10,19 @@
 
   <style>
     body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #edf7f1, #fff0f5, #fffbe6);
-      padding: 30px 15px;
-      color: #444;
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #edf7f1, #fff0f5, #fffbe6);
+  padding: 25px 15px;
+  color: #444;
+
+  min-height: 100vh;
     }
 
     .container {
-      max-width: 760px;
-      margin: auto;
+  max-width: 760px;
+  margin: auto;
+  display: block;
     }
 
     h1 {
@@ -59,13 +62,8 @@
     }
 
     .card {
-      background: rgba(255,255,255,0.75);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      border-radius: 20px;
-      margin-top: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      border: 1px solid rgba(255,255,255,0.6);
+  position: relative;
+  height: auto;
     }
 
     input, textarea {
