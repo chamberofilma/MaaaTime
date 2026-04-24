@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MaaaTime</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Playfair+Display&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #edf7f1, #fff0f5, #fffbe6);
+      padding: 30px 15px;
+      color: #444;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: #7aa892;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+      margin-bottom: 25px;
+    }
+
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: 0.25s;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    .settings-btn {
+      background: #f6d6de;
+      color: #555;
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 20px;
+      margin-top: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    input, textarea {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    textarea {
+      min-height: 120px;
+      text-align: justify;
+    }
+
+    .post {
+      border-left: 3px solid #f2c6cf;
+      padding-left: 15px;
+    }
+
+    .post-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #d88fa0;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .post-title:hover {
+      color: #c97c8f;
+      letter-spacing: 0.5px;
+    }
+
+    .content {
+      margin-top: 10px;
+      line-height: 1.8;
+      text-align: justify;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .content.open {
+      max-height: 500px;
+    }
+
+    .delete-list {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .delete-item {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+
+    .delete-btn {
+      background: #ffd6d6;
+      color: #555;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>MaaaTime</h1>
+  
+
+  <button class="settings-btn" onclick="openSettings()">Settings</button>
+
+  <div id="settings" class="card" style="display:none;">
+    <input id="title" placeholder="Judul tulisan ✨">
+    <textarea id="content" placeholder="Tulis isi kamu di sini... 🌼"></textarea>
+    <button onclick="addPost()" style="background:#d9ead3;color:#555;">Tambah Tulisan</button>
+
+    <div class="delete-list" id="deleteList"></div>
+  </div>
+
+  <div id="posts"></div>
+</div>
+
+<script>
+  const PASSWORD = "48211";
+  let posts = JSON.parse(localStorage.getItem("posts")) || [];
+
+  function openSettings() {
+    const input = prompt("Masukkan password:");
+    if (input === PASSWORD) {
+      const el = document.getElementById("settings");
+      el.style.display = el.style.display === "none" ? "block" : "none";
+      renderDeleteList();
+    } else {
+      alert("Password salah 😢");
+    }
+  }
+
+  function addPost() {
+    const title = document.getElementById("title").value;
+    const content = document.getElementById("content").value;
+    if (!title || !content) return;
+
+    posts.unshift({ title, content, open: false });
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    document.getElementById("title").value = "";
+    document.getElementById("content").value = "";
+
+    renderPosts();
+    renderDeleteList();
+  }
+
+  function togglePost(index) {
+    posts[index].open = !posts[index].open;
+    localStorage.setItem("posts", JSON.stringify(posts));
+    renderPosts();
+  }
+
+  function deletePost(index) {
+    if (!confirm("Yakin mau hapus tulisan ini?")) return;
+    posts.splice(index, 1);
+    localStorage.setItem("posts", JSON.stringify(posts));
+    renderPosts();
+    renderDeleteList();
+  }
+
+  function renderPosts() {
+    const container = document.getElementById("posts");
+    container.innerHTML = "";
+
+    posts.forEach((post, index) => {
+      const div = document.createElement("div");
+      div.className = "card post";
+
+      div.innerHTML = `
+        <div class="post-title" onclick="togglePost(${index})">
+          ${post.title}
+        </div>
+        <div class="content ${post.open ? 'open' : ''}">
+          ${post.content.replace(/\n/g, "<br>")}
+        </div>
+      `;
+
+      container.appendChild(div);
+    });
+  }
+
+  function renderDeleteList() {
+    const container = document.getElementById("deleteList");
+    container.innerHTML = "<b>Hapus Tulisan:</b>";
+
+    posts.forEach((post, index) => {
+      const div = document.createElement("div");
+      div.className = "delete-item";
+      div.innerHTML = `
+        <span>${post.title}</span>
+        <button class="delete-btn" onclick="deletePost(${index})">Hapus</button>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  renderPosts();
+</script>
+
+</body>
+</html>
