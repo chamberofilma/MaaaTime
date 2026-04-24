@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MaaaTime</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #e6f4ea, #fde7ef, #fff9db);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #6aa67c;
+    }
+
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .settings-btn {
+      background: #f8cdd8;
+      color: white;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.8);
+      padding: 15px;
+      border-radius: 15px;
+      margin-top: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    input, textarea {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #eee;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+
+    .post-title {
+      color: #f4a6b5;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>MaaaTime 🌷</h1>
+  <button class="settings-btn" onclick="toggleSettings()">Settings</button>
+
+  <div id="settings" class="card" style="display:none;">
+    <input id="title" placeholder="Judul tulisan ✨">
+    <textarea id="content" placeholder="Tulis isi kamu di sini... 🌼"></textarea>
+    <button onclick="addPost()" style="background:#b7e4c7;color:white;">Tambah Tulisan</button>
+  </div>
+
+  <div id="posts"></div>
+</div>
+
+<script>
+  let posts = JSON.parse(localStorage.getItem("posts")) || [];
+
+  function toggleSettings() {
+    const el = document.getElementById("settings");
+    el.style.display = el.style.display === "none" ? "block" : "none";
+  }
+
+  function addPost() {
+    const title = document.getElementById("title").value;
+    const content = document.getElementById("content").value;
+
+    if (!title || !content) return;
+
+    posts.unshift({ title, content });
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    document.getElementById("title").value = "";
+    document.getElementById("content").value = "";
+
+    renderPosts();
+  }
+
+  function renderPosts() {
+    const container = document.getElementById("posts");
+    container.innerHTML = "";
+
+    posts.forEach(post => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <div class="post-title">${post.title}</div>
+        <div>${post.content.replace(/\n/g, "<br>")}</div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  renderPosts();
+</script>
+
+</body>
+</html>
