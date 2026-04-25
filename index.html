@@ -122,15 +122,20 @@ input::placeholder, textarea::placeholder {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1dada;
 }
 
 .delete-btn {
-  background: #f3c2c2;
+  background: #f6e7b4; /* soft yellow */
   border: none;
-  border-radius: 10px;
-  padding: 4px 8px; /* diperkecil */
-  font-size: 12px; /* biar lebih kecil */
+  border-radius: 12px;
+  padding: 6px 14px;
+  font-size: 13px;
   cursor: pointer;
+
+  width: auto; /* ini biar ga full panjang */
+  flex-shrink: 0; /* biar ga ketarik */
 }
 
 </style>
