@@ -181,7 +181,13 @@
     const content = document.getElementById("content").value;
     if (!title || !content) return;
 
-    posts.unshift({ title, content, open: false });
+    const date = new Date().toLocaleDateString("id-ID", {
+  day: "numeric",
+  month: "long",
+  year: "numeric"
+});
+
+posts.unshift({ title, content, date, open: false });
     localStorage.setItem("posts", JSON.stringify(posts));
 
     document.getElementById("title").value = "";
