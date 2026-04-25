@@ -228,13 +228,13 @@ posts.unshift({ title, content, date, open: false });
       div.className = "card post";
 
       div.innerHTML = `
-        <div class="post-title" onclick="togglePost(${index})">
-          ${post.title}
-        </div>
-        <div class="content ${post.open ? 'open' : ''}">
-          ${post.content.replace(/\n/g, "<br>")}
-        </div>
-      `;
+  <div class="post-title" onclick="togglePost(${index})">
+    ${post.title}
+  </div>
+  <div class="content" style="display:${post.open ? 'block' : 'none'};">
+    ${post.content.replace(/\n/g, "<br>")}
+  </div>
+`;
 
       container.appendChild(div);
     });
