@@ -163,7 +163,15 @@
 
 <script>
   const PASSWORD = "48211";
-  let posts = []; localStorage.removeItem("posts");
+  let posts = JSON.parse(localStorage.getItem("posts")) || [];
+
+// FIX data lama
+posts = posts.map(post => ({
+  title: post.title || "",
+  content: post.content || "",
+  date: post.date || "",
+  open: false
+}));
 
   function openSettings() {
     const input = prompt("Masukkan password:");
