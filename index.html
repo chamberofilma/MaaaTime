@@ -75,12 +75,13 @@
     }
 
     input, textarea {
-      width: 100%;
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid #eee;
-      font-family: 'Quicksand', sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 5px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  font-family: 'Quicksand', sans-serif;
     }
 
     textarea {
@@ -141,7 +142,11 @@
       background: #ffd6d6;
       color: #555;
     }
-
+#settings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+      }
   </style>
 </head>
 <body>
