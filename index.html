@@ -12,7 +12,8 @@
 body {
   margin: 0;
   font-family: 'Quicksand', sans-serif;
-  background: linear-gradient(135deg, #edf7f1, #fff0f5, #fffbe6);
+  background: linear-gradient(180deg, #edf7f1, #fff0f5);
+  min-height: 100vh;
   padding: 25px 15px;
   color: #444;
 }
@@ -226,8 +227,12 @@ function renderPosts() {
       </div>
 
       <div class="content" style="display:${post.open ? 'block' : 'none'};">
-        ${post.content.replace(/\\n/g, "<br>")}
-      </div>
+  ${post.content
+    .split("\n\n")
+    .map(p => `<p>${p}</p>`)
+    .join("")
+  }
+</div>
     `;
 
     container.appendChild(div);
