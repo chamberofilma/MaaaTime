@@ -167,11 +167,10 @@
   const PASSWORD = "48211";
   let posts = JSON.parse(localStorage.getItem("posts")) || [];
 
-// FIX data lama
 posts = posts.map(post => ({
   title: post.title || "",
   content: post.content || "",
-  date: post.date || "",
+  date: post.date || new Date().toLocaleDateString("id-ID"),
   open: false
 }));
 
@@ -231,12 +230,11 @@ posts.unshift({ title, content, date, open: false });
 
       div.innerHTML = `
   <div class="post-title" onclick="togglePost(${index})">
-    ${post.title}
+  ${post.title}
+  <div style="font-size:12px; color:#999; margin-top:3px;">
+    ${post.date || ""}
   </div>
-  <div class="content" style="display:${post.open ? 'block' : 'none'};">
-    ${post.content.replace(/\n/g, "<br>")}
-  </div>
-`;
+</div>
 
       container.appendChild(div);
     });
