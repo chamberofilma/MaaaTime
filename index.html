@@ -74,9 +74,18 @@
   height: auto;
     }
 
-    input:focus, textarea:focus {
-  background: #ffffff;
-  box-shadow: 0 0 0 2px #f2c6cf; /* pink soft glow */
+    input, textarea {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 5px;
+  padding: 12px;
+  border-radius: 14px;
+
+  border: none; /* HAPUS border */
+  outline: none; /* HAPUS garis biru pas diklik */
+
+  background: #f8f8f8; /* warna soft */
+  font-family: 'Quicksand', sans-serif;
     }
 
     textarea {
