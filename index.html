@@ -221,23 +221,27 @@ posts.unshift({ title, content, date, open: false });
   }
 
   function renderPosts() {
-    const container = document.getElementById("posts");
-    container.innerHTML = "";
+  const container = document.getElementById("posts");
+  container.innerHTML = "";
 
-    posts.forEach((post, index) => {
-      const div = document.createElement("div");
-      div.className = "card post";
+  posts.forEach((post, index) => {
+    const div = document.createElement("div");
+    div.className = "card";
 
-      div.innerHTML = `
-  <div class="post-title" onclick="togglePost(${index})">
-  ${post.title}
-  <div style="font-size:12px; color:#999; margin-top:3px;">
-    ${post.date || ""}
-  </div>
-</div>
+    div.innerHTML = `
+      <div class="post-title" onclick="togglePost(${index})">
+        ${post.title}
+        <div style="font-size:12px; color:#999; margin-top:3px;">
+          ${post.date || ""}
+        </div>
+      </div>
+      <div class="content" style="display:${post.open ? 'block' : 'none'};">
+        ${post.content.replace(/\\n/g, "<br>")}
+      </div>
+    `;
 
-      container.appendChild(div);
-    });
+    container.appendChild(div);
+  });
   }
 
   function renderDeleteList() {
