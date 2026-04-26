@@ -242,9 +242,9 @@ function renderPosts() {
 
       <div class="content" style="display:${post.open ? 'block' : 'none'};">
   ${post.content
-    .split("\n\n")
-    .map(p => `<p>${p}</p>`)
-    .join("")
+  .split("\n\n")
+  .map(p => `<p>${p.replace(/\n/g, "<br>")}</p>`)
+  .join("")
   }
 </div>
     `;
